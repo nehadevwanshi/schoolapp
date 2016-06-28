@@ -1,8 +1,107 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+​
+<head>
+    <title>Login/Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-  </head>
-  <body>
-    The best place to start is the "WelcomeController.py" file in app/controllers.
-  </body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script>
+         $(function() {
+            $( "#date" ).datepicker();
+            $( "#date" ).datepicker("show");
+         });
+    </script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '583304101848073',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+  </script>
+</head>
+​
+<body>
+​
+​
+​
+    <div class='col-md-10 col-sm-offset-1'>
+        <h2>Welcome!</h2>
+         {% with messages = get_flashed_messages(with_categories=true) %}
+             {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{category}}">{{message}}</p>
+                {% endfor %}
+             {% endif %}
+         {% endwith %}
+    </div>
+​
+    <div class='container col-md-4 col-sm-offset-1'>
+        <h2>Registration</h2>
+        <form action="/users/register" method="POST">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="phone_number" class="form-control" name="phone_number" id="phone_number" placeholder="Enter Phone Number">
+                </div>
+                <div class="form-group">
+                    <label for="school_location">School Location:</label>
+                    <input type="school_location" class="form-control" name="school_location" id="school_location" placeholder="Enter School Location">
+                </div>
+                <div class="form-group">
+                    <label for="pw">Password:</label>
+                    <input type="password" class="form-control" name="pw" id="pw" placeholder="Enter password"><br>
+                    *Password should be at least 8 characters
+                </div>
+                <div class="form-group">
+                    <label for="cpw">Confirm Password:</label>
+                    <input type="password" class="form-control" name="cpw" id="cpw" placeholder="Confirm password">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+​
+​
+    <!-- <div class='col-md-4'>
+        <h2>Login</h2>
+        <form action="/users/login" method="POST">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="pw">Password:</label>
+                <input type="password" class="form-control" name="pw" id="pw" placeholder="Enter password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div> -->
+</body>
 </html>
