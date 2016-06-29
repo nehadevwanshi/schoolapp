@@ -2,106 +2,172 @@
 <html lang="en">
 ​
 <head>
-    <title>Login/Registration</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>&rAarr; School| App</title>
+    <meta name="description" content="school app.">
+    <meta name="author" content="">
+    <!-- IE Edge Meta tag (X means to render in the latest engine) -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Viewport , set to the natural device width and set the initial scale to 1.0 to stop shrinking of the website on Mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <script>
-         $(function() {
-            $( "#date" ).datepicker();
-            $( "#date" ).datepicker("show");
-         });
-    </script>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '583304101848073',
-          xfbml      : true,
-          version    : 'v2.6'
-        });
-      };
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap/css/bootstrap.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/css/form-elements.css') }}">
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-  </script>
+   <!-- FONT –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/fonts/font-awesome.min.css') }}">
+
+    <!-- custom css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static',filename='js/jquery-2.2.3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='css/bootstrap/js/bootstrap.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/script.php') }}"></script>
+
+    <!-- Favicon
+        –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="shortcut icon" href="{{url_for('static', filename='css/images/favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{url_for('static', filename='css/images/favicon.ico')}}" type="image/x-icon">
+
+  </head>
+    <div id="fb-root"></div>
+    <script type="text/javascript">
+        //<![CDATA[
+        window.fbAsyncInit = function() {
+        FB.init({
+         appId      : '583304101848073', // App ID
+         channelURL : '', // Channel File, not required so leave empty
+         status     : true, // check login status
+         cookie     : true, // enable cookies to allow the server to access the session
+         oauth      : true, // enable OAuth 2.0
+         xfbml      : false  // parse XFBML
+       });
+    };
+        // logs the user in the application and facebook
+        function login(){
+        FB.getLoginStatus(function(r){
+             if(r.status === 'connected'){
+                    window.location.href = 'fbconnect.php';
+             }else{
+                FB.login(function(response) {
+                        if(response.authResponse) {
+                      //if (response.perms)
+                            window.location.href = 'fbconnect.php';
+                    } else {
+                      // user is not logged in
+                    }
+             },{scope:'email'}); // which data to access from user profile
+         }
+        });
+        }
+        // Load the SDK Asynchronously
+        (function() {
+           var e = document.createElement('script'); e.async = true;
+           e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+           document.getElementById('fb-root').appendChild(e);
+        }());
+        //]]>
+    </script>
 </head>
 ​
 <body>
+    <nav class="navbar navbar-inverse gradient"
+         data-spy="affix"
+         role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#brand"><span>School | App</span></a>
+            </div><!-- navbar-header -->
+            <div class="collapse navbar-collapse" id="collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="/" data-offset="0">Home</a></li>
+                    <li><a href="/">Sign in</a></li>
+                    <li><a href='#' onclick='login();'>Facebook Login</a></li>
+                </ul>
+            </div><!-- collapse navbar-collapse -->
+        </div><!-- container -->
+    </nav>
 ​
 ​
 ​
-    <div class='col-md-10 col-sm-offset-1'>
-        <h2>Welcome!</h2>
-         {% with messages = get_flashed_messages(with_categories=true) %}
-             {% if messages %}
-                {% for category, message in messages %}
-                    <p class="{{category}}">{{message}}</p>
-                {% endfor %}
-             {% endif %}
-         {% endwith %}
+    <!--<div class='col-md-10 col-sm-offset-1'>-->
+        <!--<h2>Welcome!</h2>-->
+         <!--{% with messages = get_flashed_messages(with_categories=true) %}-->
+             <!--{% if messages %}-->
+                <!--{% for category, message in messages %}-->
+                    <!--<p class="{{category}}">{{message}}</p>-->
+                <!--{% endfor %}-->
+             <!--{% endif %}-->
+         <!--{% endwith %}-->
+    <!--</div>-->
+<!--​-->
+    <div class="container">
+
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        	<div class="panel panel-default">
+        		<div class="panel-heading">
+			    		<h3 class="panel-title">Signin</h3>
+			 			</div>
+			 			<div class="panel-body">
+			    		<form role="form" class="form-registration" action="/login" method="post">
+			    			<div class="row">
+			    				<div class="col-xs-12 col-sm-12 col-md-12">
+			    					<div class="form-group">
+                                        <label>Email Address:</label>
+			                            <input type="text" name="email" class="form-control input-sm" placeholder="Email">
+                                            {% with messages = get_flashed_messages(category_filter = ['no_email']) %}
+                                            {% for message in messages %}
+                                            <p class="error">{{message}}</p>
+                                            {% endfor %}
+                                            {% endwith %}
+                                    </div>
+			    				</div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+			    					<div class="form-group">
+                                        <label>Password:</label>
+			                            <input type="password" name="pwd" class="form-control input-sm" placeholder="Password">
+			    					        {% with messages = get_flashed_messages(category_filter = ['no_pwd']) %}
+                                            {% for message in messages %}
+                                            <p class="error">{{message}}</p>
+                                            {% endfor %}
+                                            {% endwith %}
+                                    </div>
+			    				</div>
+                                <input type="submit" value="Sign In" class="btn btn-success btn-block">
+                                <br>
+                                <a href="/register" class="register-link">Don't have an account? Register.</a>
+                            </div>
+			    		</form>
+			    	</div>
+	    		</div>
+    		</div>
+    	</div>
     </div>
-​
-    <div class='container col-md-4 col-sm-offset-1'>
-        <h2>Registration</h2>
-        <form action="/users/register" method="POST">
-                <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter First Name">
-                </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter Last Name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
-                </div>
-                <div class="form-group">
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="phone_number" class="form-control" name="phone_number" id="phone_number" placeholder="Enter Phone Number">
-                </div>
-                <div class="form-group">
-                    <label for="school_location">School Location:</label>
-                    <input type="school_location" class="form-control" name="school_location" id="school_location" placeholder="Enter School Location">
-                </div>
-                <div class="form-group">
-                    <label for="pw">Password:</label>
-                    <input type="password" class="form-control" name="pw" id="pw" placeholder="Enter password"><br>
-                    *Password should be at least 8 characters
-                </div>
-                <div class="form-group">
-                    <label for="cpw">Confirm Password:</label>
-                    <input type="password" class="form-control" name="cpw" id="cpw" placeholder="Confirm password">
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-    </div>
-​
-​
-    <!-- <div class='col-md-4'>
-        <h2>Login</h2>
-        <form action="/users/login" method="POST">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <label for="pw">Password:</label>
-                <input type="password" class="form-control" name="pw" id="pw" placeholder="Enter password">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </div> -->
+​    <!--
+  <!--Below we include the Login Button social plugin. This button uses-->
+  <!--the JavaScript SDK to present a graphical Login button that triggers-->
+  <!--the FB.login() function when clicked.&ndash;&gt;-->
+
+    <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">-->
+    <!--</fb:login-button>-->
+
+    <!--<div id="status"></div>-->
+    <!--&lt;!&ndash;facebook login code start here&ndash;&gt;-->
+    <!--<div-->
+      <!--class="fb-like"-->
+      <!--data-share="true"-->
+      <!--data-width="450"-->
+      <!--data-show-faces="true">-->
+    <!--</div>-->
+    <!--end facebook-->
 </body>
 </html>
